@@ -8,4 +8,4 @@ $(TARGET):$(OBJS)
 	$(CC) $(CFLAGS) $(LDLIBS) -o $(TARGET) $(OBJS) $(LDLIBS)
 
 clean:
-	$(OBJS) $(TARGET)
+	$(RM) $(OBJS) $(TARGET)
