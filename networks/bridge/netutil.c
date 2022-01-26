@@ -9,6 +9,8 @@
 #include <netpacket/packet.h>
 #include <netinet/if_ether.h>
 #include <netinet/ip.h>
+//#include <linux/if_packet.h>
+#include <netinet/in.h>
 
 extern int DebugPrintf(char *fmt, ...);
 extern int DebugPerror(char *msg);
@@ -84,7 +86,7 @@ int PrintEtherHeader(struct ether_header *eh, FILE *fp) {
   fprintf(fp, "ether_header--------------------\n");
   fprintf(fp, "ether_dhost = %s\n", my_ether_ntoa_r(eh->ether_dhost, buf, sizeof(buf)));
   fprintf(fp, "ether_shost = %s\n", my_ether_ntoa_r(eh->ether_shost, buf, sizeof(buf)));
-  fprintf(fp, "ether_type = %02X", ntohs(eh -> ether_type));
+  fprintf(fp, "ether_type = %02X\n", ntohs(eh -> ether_type));
 
   switch (ntohs(eh->ether_type)) {
   case ETH_P_IP:
@@ -94,17 +96,19 @@ int PrintEtherHeader(struct ether_header *eh, FILE *fp) {
     struct in_addr daddr;
     saddr.s_addr = ip->saddr;
     daddr.s_addr = ip->daddr;
-    fprintf("Source Address          = %s\n", inet_ntoa(saddr));
-    fprintf("Destination Address     = %s\n", inet_ntoa(daddr));
+    fprintf(fp, "Source Address          = %s\n", inet_ntoa(saddr));
+    fprintf(fp, "Destination Address     = %s\n", inet_ntoa(daddr));
     break;
+  /*
   case ETH_P_IPV6:
     fprintf(fp, "(IPV6)\n");
     break;
   case ETH_P_ARP:
     fprintf(fp, "(ARP)\n");
     break;
+ */
   default:
-    fprintf(fp, "(Unknown)\n");
+    //fprintf(fp, "(Unknown)\n");
     break;
   }
 

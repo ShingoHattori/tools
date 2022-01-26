@@ -16,7 +16,7 @@ typedef struct {
   int  DebugOut;
 }PARAM;
 
-PARAM Param={"eth0", "eth1", 0};
+PARAM Param={"enp11s0", "enx00249b27f591", 1};
 
 typedef struct {
   int soc;
