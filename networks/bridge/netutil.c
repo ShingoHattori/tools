@@ -9,9 +9,6 @@
 #include <netpacket/packet.h>
 #include <netinet/if_ether.h>
 
-#ifndef ETHERTYPE_IPV6
-#define ETHERTYPE_IPV6 0x86dd
-#endif
 
 extern int DebugPrintf(char *fmt, ...);
 extern int DebugPerror(char *msg);
@@ -92,6 +89,9 @@ int PrintEtherHeader(struct ether_header *eh, FILE *fp) {
   switch (ntohs(eh->ether_type)) {
   case ETH_P_IP:
     fprintf(fp, "(IP)\n");
+    break;
+  case ETH_P_IPV6:
+    fprintf(fp, "(IPV6)\n");
     break;
   case ETH_P_ARP:
     fprintf(fp, "(ARP)\n");
