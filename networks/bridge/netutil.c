@@ -8,7 +8,7 @@
 #include <net/ethernet.h>
 #include <netpacket/packet.h>
 #include <netinet/if_ether.h>
-
+#include <netinet/ip.h>
 
 extern int DebugPrintf(char *fmt, ...);
 extern int DebugPerror(char *msg);
@@ -89,6 +89,13 @@ int PrintEtherHeader(struct ether_header *eh, FILE *fp) {
   switch (ntohs(eh->ether_type)) {
   case ETH_P_IP:
     fprintf(fp, "(IP)\n");
+    struct iphdr* ip = (struct iphdr *)(eh + 1);
+    struct in_addr saddr;
+    struct in_addr daddr;
+    saddr.s_addr = ip->saddr;
+    daddr.s_addr = ip->daddr;
+    fprintf("Source Address          = %s\n", inet_ntoa(saddr));
+    fprintf("Destination Address     = %s\n", inet_ntoa(daddr));
     break;
   case ETH_P_IPV6:
     fprintf(fp, "(IPV6)\n");
