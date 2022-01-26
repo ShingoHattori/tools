@@ -9,6 +9,10 @@
 #include <netpacket/packet.h>
 #include <netinet/if_ether.h>
 
+#ifndef ETHERTYPE_IPV6
+#define ETHERTYPE_IPV6 0x86dd
+#endif
+
 extern int DebugPrintf(char *fmt, ...);
 extern int DebugPerror(char *msg);
 
